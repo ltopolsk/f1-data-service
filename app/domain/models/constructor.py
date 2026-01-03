@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class Team(BaseModel):
+class Constructor(BaseModel):
 
     constructor_id: str
     name: str

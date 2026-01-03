@@ -4,7 +4,7 @@ from pydantic import BaseModel, field_validator
 from typing import Optional, List
 
 from .driver import Driver
-from .team import Team
+from .constructor import Constructor
 from .circuit import Circuit 
 
 class RaceResult(BaseModel):
@@ -17,12 +17,12 @@ class RaceResult(BaseModel):
     time: Optional[str] = None
 
     driver: Driver
-    constructor: Team
+    constructor: Constructor
 
 
 class Race(BaseModel):
     
-    season: str
+    season: int
     round: int
     url: str
     race_name: str
