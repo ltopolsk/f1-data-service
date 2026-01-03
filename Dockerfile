@@ -1,10 +1,18 @@
-FROM python:3.14-slim
-# COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+FROM python:3.12-slim
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+ENV PYTHONUNBUFFERED=1 \
+    UV_COMPILE_BYTECODE=1
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+ENV VIRTUAL_ENV=/app/.venv \
+    PATH="/app/.venv/bin:$PATH"
+
+
+COPY pyproject.toml uv.lock ./
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --no-dev
 
 COPY ./app ./app
 
